@@ -23,7 +23,6 @@ class HandPointDataset(data.Dataset):
         self.size = opt.size
         self.test_index = opt.test_index
 
-        self.PCA_SZ = opt.PCA_SZ
         self.SAMPLE_NUM = opt.SAMPLE_NUM
         self.INPUT_FEATURE_NUM = opt.INPUT_FEATURE_NUM
         self.JOINT_NUM = opt.JOINT_NUM
@@ -72,20 +71,6 @@ class HandPointDataset(data.Dataset):
         self.gt_xyz = self.gt_xyz.index_select(0, valid_ind.long())
         self.total_frame_num = self.point_clouds.size(0)
 
-        # load PCA coeff
-        # PCA_data_path = os.path.join(self.root_path, subject_names[self.test_index])
-        # print("PCA_data_path: " + PCA_data_path)
-        # PCA_coeff_mat = sio.loadmat(os.path.join(PCA_data_path, 'PCA_coeff.mat'))
-        # self.PCA_coeff = torch.from_numpy(PCA_coeff_mat['PCA_coeff'][:, 0:self.PCA_SZ].astype(np.float32))
-        # PCA_mean_mat = sio.loadmat(os.path.join(PCA_data_path, 'PCA_mean_xyz.mat'))
-        # self.PCA_mean = torch.from_numpy(PCA_mean_mat['PCA_mean_xyz'].astype(np.float32))
-
-        # tmp = self.PCA_mean.expand(self.total_frame_num, self.JOINT_NUM * 3)
-        # tmp_demean = self.gt_xyz - tmp
-        # self.gt_pca = torch.mm(tmp_demean, self.PCA_coeff)
-
-        # self.PCA_coeff = self.PCA_coeff.transpose(0, 1).cuda()
-        # self.PCA_mean = self.PCA_mean.cuda()
 
     def __getitem__(self, index):
         return self.point_clouds[index, :, :], self.volume_length[index], 1, self.gt_xyz[index, :]

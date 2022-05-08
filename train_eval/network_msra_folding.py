@@ -31,7 +31,7 @@ relative_idx2 = np.array([13,
 class PointNet_Plus(nn.Module):
     def __init__(self, opt):
         super(PointNet_Plus, self).__init__()
-        self.num_outputs = opt.PCA_SZ
+        # self.num_outputs = opt.PCA_SZ
         self.knn_K = opt.knn_K
         self.ball_radius2 = opt.ball_radius2
         self.sample_num_level1 = opt.sample_num_level1
